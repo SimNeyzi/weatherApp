@@ -56,9 +56,7 @@ const postData = async (url = '', data = {}) => {
 
 // update UI with the new data
 const updateUI = async () => {
-
   const request = await fetch('/all');
-
   try{
     const allData = await request.json();
     document.getElementById('name').innerHTML = allData.name;
@@ -68,7 +66,6 @@ const updateUI = async () => {
   } catch(err) {
     console.log('error: ', err);
   }
-
 }
 
 
