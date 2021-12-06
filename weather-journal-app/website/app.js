@@ -1,11 +1,10 @@
-import { key } from './api.js'
-
 /* Global Variables */
 const baseUrl = 'https://api.openweathermap.org/data/2.5/weather?zip=';
+const key = '2bef0149506f2f278ad159f469b835cd&units=imperial';
 
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
+let newDate = d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear();
 
 // get request
 const getData = async (url='') => {
@@ -56,18 +55,19 @@ const postData = async (url = '', data = {}) => {
 }
 
 // update UI with the new data
-const updateUI = () => {
-  const name = document.getElementById('name');
-  const date = document.getElementById('date');
-  const temp = document.getElementById('temp');
-  const content = document.getElementById('content');
-  getData('/all')
-  .then((data) => {
-    name.textContent = 'Name: '+ data.name;
-    date.textContent = 'Date: '+ data.date;
-    temp.textContent = 'Temperature: ' + data.temp;
-    content.textContent = 'Content: ' + data.content;
-  })
+const updateUI = async () => {
+
+  const request = await fetch('/all');
+
+  try{
+    const allData = await request.json();
+    document.getElementById('name').innerHTML = allData.name;
+    document.getElementById('date').innerHTML = allData.date;
+    document.getElementById('temp').innerHTML = allData.temp;
+    document.getElementById('content').innerHTML = allData.content;
+  } catch(err) {
+    console.log('error: ', err);
+  }
 
 }
 
